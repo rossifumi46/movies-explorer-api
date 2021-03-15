@@ -8,17 +8,17 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
 const limiter = require('./middlewares/limiter');
-const { MONGO_URL } = require('./config');
+const { MONGO_URL_DEV } = require('./config');
 
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { NODE_ENV, PORT = 3000, MONGO_URL } = process.env;
 
 const app = express();
 
 mongoose.set('returnOriginal', false);
 
-mongoose.connect(MONGO_URL, {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : MONGO_URL_DEV, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
