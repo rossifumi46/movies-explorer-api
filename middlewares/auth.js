@@ -1,6 +1,7 @@
 // middlewares/auth.js
 
 const { NODE_ENV, JWT_SECRET } = process.env;
+console.log(NODE_ENV);
 const jwt = require('jsonwebtoken');
 const { authErrorMessage } = require('../consts');
 const { JWT_SECRET_DEV } = require('../config');
