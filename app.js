@@ -8,10 +8,11 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/error-handler');
 const limiter = require('./middlewares/limiter');
+const { MONGO_URL } = require('./config');
 
 require('dotenv').config();
 
-const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 

@@ -1,4 +1,16 @@
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
+
+const urlValidator = (value, helpers) => {
+// Throw an error (will be replaced with 'any.custom' error)
+
+  if (!validator.isURL(value)) {
+    return helpers.message('Неверный URL');
+  }
+
+  // Return the value unchanged
+  return value;
+};
 
 module.exports.validateProfileBody = celebrate({
   body: Joi.object().keys({
@@ -14,10 +26,10 @@ module.exports.validateMovieBody = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().uri().required(),
-    trailer: Joi.string().uri().required(),
-    thumbnail: Joi.string().uri().required(),
-    movieId: Joi.string().required(),
+    image: Joi.string().custom(urlValidator, 'URL validation').required(),
+    trailer: Joi.string().custom(urlValidator, 'URL validation').required(),
+    thumbnail: Joi.string().custom(urlValidator, 'URL validation').required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),

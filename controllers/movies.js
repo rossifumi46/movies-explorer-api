@@ -1,7 +1,8 @@
 const Movie = require('../models/movie');
 const PermissionError = require('../errors/permission-err');
 const NotFoundError = require('../errors/not-found-err');
-const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/bad-request-err');
+const { movieConflictErrorMessage, movieNotFoundErrorMessage, PermissionErrorMessage } = require('../consts');
 
 module.exports.getSavedMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
@@ -31,11 +32,8 @@ module.exports.saveMovie = (req, res, next) => {
   })
     .then((movie) => res.send({ movie }))
     .catch((err) => {
-      if (err.errors) {
-        const messages = [];
-        // if (err.errors.name) messages.push(err.errors.name.message);
-        // if (err.errors.link) messages.push(err.errors.link.message);
-        throw new BadRequestError(messages);
+      if (err.name === 'MongoError' && err.code === 11000) {
+        throw new ConflictError(movieConflictErrorMessage);
       }
       next(err);
     })
@@ -46,10 +44,10 @@ module.exports.deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   const owner = req.user._id;
   Movie.findById(movieId)
-    .orFail(() => { throw new NotFoundError('Фильм не найден'); })
+    .orFail(() => { throw new NotFoundError(movieNotFoundErrorMessage); })
     .then((movie) => {
       if (movie.owner.toString() !== owner) {
-        throw new PermissionError('Вы не можете удалить фильм');
+        throw new PermissionError(PermissionErrorMessage);
       }
       return Movie.findByIdAndRemove(movieId);
     })
