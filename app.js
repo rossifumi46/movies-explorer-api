@@ -13,7 +13,7 @@ const { MONGO_URL } = require('./config');
 require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
-
+console.log(PORT);
 const app = express();
 
 mongoose.set('returnOriginal', false);
