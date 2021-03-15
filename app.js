@@ -11,7 +11,6 @@ const limiter = require('./middlewares/limiter');
 const { MONGO_URL_DEV } = require('./config');
 
 require('dotenv').config();
-
 const { NODE_ENV, PORT = 3000, MONGO_URL } = process.env;
 
 const app = express();
