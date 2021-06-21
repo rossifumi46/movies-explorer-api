@@ -15,5 +15,5 @@ module.exports = {
   userConflictErrorMessage,
   credErrorMessage,
   serverErrorMessage,
-  authErrorMessage
+  authErrorMessage,
 };

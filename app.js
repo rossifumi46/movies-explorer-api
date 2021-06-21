@@ -29,8 +29,8 @@ app.use(helmet());
 
 // Массив разешённых доменов
 const allowedCors = [
-  'https://mesto-c4rdesigner.students.nomoreparties.spacek',
-  'http://mesto-c4rdesigner.students.nomoreparties.space',
+  'https://sheshen.students.nomoredomains.monster',
+  'http://sheshen.students.nomoredomains.monster',
   'http://localhost:3000',
 ];
 
@@ -49,8 +49,8 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use('/', router);
 
+app.use(errorLogger); // подключаем логгер ошибок
 // обработчики ошибок
 app.use(errors()); // обработчик ошибок celebrate
-app.use(errorLogger); // подключаем логгер ошибок
 app.use(errorHandler);
 app.listen(PORT);

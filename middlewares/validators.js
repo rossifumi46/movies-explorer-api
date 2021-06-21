@@ -43,7 +43,7 @@ module.exports.validateDeleteParams = celebrate({
 
 module.exports.validateAuth = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required(),
+    email: Joi.string().email().required(),
     password: Joi.string().required().min(8),
   }),
 });

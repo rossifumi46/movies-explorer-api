@@ -8,6 +8,7 @@ const { userNotFoundErrorMessage, userConflictErrorMessage } = require('../const
 const { JWT_SECRET_DEV } = require('../config');
 
 require('dotenv').config();
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getMyProfile = (req, res, next) => {
